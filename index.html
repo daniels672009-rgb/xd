@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Persiana Inteligente - Salud Visual en el Aula</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        amberGlow: '#f59e0b'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Animaciones personalizadas */
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 25px rgba(2, 132, 199, 0.25); }
+            50% { box-shadow: 0 0 45px rgba(2, 132, 199, 0.5); }
+        }
+        .glow-card {
+            animation: pulseGlow 4s infinite ease-in-out;
+        }
+
+        /* Canvas del simulador */
+        #simCanvas {
+            touch-action: none;
+            background: linear-gradient(to bottom, #1e293b, #0f172a);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Navegación -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-500 to-cyan-400 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-brand-500/30">
+                        <i class="fa-solid font-bold fa-blinds"></i>
+                    </div>
+                    <div>
+                        <span class="text-lg font-bold text-white tracking-wide block leading-none">LuminaBlind</span>
+                        <span class="text-xs text-brand-500 font-medium tracking-wider uppercase">Proyecto Escolar</span>
+                    </div>
+                </div>
+
+                <nav class="hidden md:flex space-x-8 text-sm font-semibold">
+                    <a href="#problematica" class="text-slate-300 hover:text-brand-500 transition-colors">Problemática</a>
+                    <a href="#demostracion" class="text-slate-300 hover:text-brand-500 transition-colors">Demostración</a>
+                    <a href="#solucion" class="text-slate-300 hover:text-brand-500 transition-colors">Solución</a>
+                    <a href="#simulador" class="text-slate-300 hover:text-brand-500 transition-colors">Simulador</a>
+                    <a href="#caracteristicas" class="text-slate-300 hover:text-brand-500 transition-colors">Beneficios</a>
+                </nav>
+
+                <a href="#simulador" class="inline-flex items-center justify-center px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-white bg-brand-600 hover:bg-brand-500 transition-all shadow-md shadow-brand-600/30">
+                    Probar Simulador
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="pt-28 sm:pt-36 pb-16 md:pb-24 overflow-hidden relative">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Columna Izquierda: Introducción -->
+                <div class="lg:col-span-6 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-500 text-xs sm:text-sm font-semibold">
+                        <span class="flex h-2 w-2 rounded-full bg-brand-500 animate-ping"></span>
+                        Innovación Educativa & Salud Visual
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+                        Redirige la luz, <br class="hidden sm:inline">
+                        <span class="bg-gradient-to-r from-brand-500 via-cyan-400 to-amber-400 bg-clip-text text-transparent">
+                            protege la visión estudiantil
+                        </span>
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                        Sistema automatizado de lamas orientables mediante Bluetooth diseñado para eliminar el deslumbramiento en las aulas y canalizar la luz natural de forma ergonómica sobre las mesas de estudio.
+                    </p>
+
+                    <div class="pt-2 flex flex-wrap gap-4 justify-center lg:justify-start">
+                        <a href="#simulador" class="px-6 py-3.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-brand-600 to-cyan-600 hover:from-brand-500 hover:to-cyan-500 transition-all duration-300 shadow-xl shadow-brand-600/25 flex items-center gap-2">
+                            <i class="fa-solid fa-sliders"></i> Probar Control de Lamas
+                        </a>
+                        <a href="#problematica" class="px-6 py-3.5 rounded-xl text-sm font-semibold text-slate-300 bg-slate-900 border border-slate-800 hover:border-slate-700 hover:bg-slate-850 transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info"></i> Ver Investigación
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: Video Frame 9:16 vertical o 16:9 posicionado adecuadamente -->
+                <div class="lg:col-span-6 flex justify-center" id="demostracion">
+                    <div class="relative w-full max-w-[340px] sm:max-w-[380px] rounded-[2.5rem] bg-slate-900 p-3 sm:p-4 border border-slate-800 shadow-2xl glow-card">
+                        
+                        <!-- Header del Frame -->
+                        <div class="flex items-center justify-between px-3 py-2 mb-2 text-slate-400 text-xs border-b border-slate-800">
+                            <div class="flex items-center space-x-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-red-500 inline-block"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-yellow-500 inline-block"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-green-500 inline-block"></span>
+                            </div>
+                            <div class="flex items-center gap-1.5 font-mono text-[11px] text-brand-500">
+                                <i class="fa-bluetooth-b fab"></i> Conectado
+                            </div>
+                        </div>
+
+                        <!-- Contenedor del video con aspect ratio ajustado para verticales/horizontal -->
+                        <div class="relative rounded-2xl overflow-hidden bg-slate-950 aspect-[9/16] shadow-inner group">
+                            
+                            <!-- Video embebido con bucle infinito y silencio -->
+                            <video 
+                                class="w-full h-full object-cover rounded-2xl" 
+                                autoplay 
+                                loop 
+                                muted 
+                                playsinline
+                                preload="auto"
+                                poster="https://placehold.co/600x1066/0f172a/0284c7?text=Demostracion+Persiana"
+                            >
+                                <!-- Generación de simulación canvas como fallback si el video no carga -->
+                                <source src="https://assets.mixkit.co/videos/preview/mixkit-student-studying-in-a-library-41566-large.mp4" type="video/mp4">
+                                Tu navegador no soporta reproducción de videos.
+                            </video>
+
+                            <!-- Capa Overlay Informativa -->
+                            <div class="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-xs font-bold text-white">Demostración en Vivo</p>
+                                        <p class="text-[11px] text-slate-300">Regulación de luz en tiempo real</p>
+                                    </div>
+                                    <span class="px-2 py-1 rounded bg-slate-800/90 text-amber-400 text-[10px] font-mono border border-amber-500/30">
+                                        <i class="fa-solid fa-rotate text-xs animate-spin"></i> Bucle Continuo
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pie de Marco inteligente -->
+                        <div class="mt-3 text-center">
+                            <span class="text-[11px] text-slate-400 font-mono">Prueba Experimental #01 - Aula Escolar</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Problemática vs Solución -->
+    <section id="problematica" class="py-20 bg-slate-900/50 border-y border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold uppercase tracking-widest text-brand-500 mb-2">Fundamentación del Proyecto</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white">El Reto de la Iluminación Escolar</p>
+                <p class="mt-4 text-slate-400 text-sm sm:text-base">
+                    Investigamos cómo las condiciones lumínicas en las aulas de clases afectan la concentración y la salud ocular de nuestros compañeros.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+                
+                <!-- Card Problemática -->
+                <div class="bg-slate-950 rounded-2xl p-6 sm:p-8 border border-red-900/30 hover:border-red-500/40 transition-all relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-red-500/5 rounded-full blur-2xl group-hover:bg-red-500/10 transition-all"></div>
+                    <div class="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">La Problemática: Desgaste Visual</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Durante gran parte de la jornada escolar, la luz solar incide en ángulo directo sobre la cara y los ojos de los alumnos. Esto provoca fatiga ocular, dolor de cabeza, pérdida de concentración y necesidad constante de parpadear o forzar la vista.
+                    </p>
+                    <ul class="space-y-3 text-sm text-slate-300">
+                        <li class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-xmark text-red-400"></i> Deslumbramiento encandilante en rostros.
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-xmark text-red-400"></i> Sombras incómodas sobre los cuadernos.
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-xmark text-red-400"></i> Cierre obligado de persianas cortando toda luz.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Card Solución -->
+                <div class="bg-slate-950 rounded-2xl p-6 sm:p-8 border border-brand-500/30 hover:border-brand-500/60 transition-all relative overflow-hidden group" id="solucion">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-brand-500/10 rounded-full blur-2xl group-hover:bg-brand-500/20 transition-all"></div>
+                    <div class="w-12 h-12 rounded-xl bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Nuestra Solución: Orientación Inteligente</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Desarrollamos una persiana con motorización de precisión que no solo sube o baja, sino que **ajusta el ángulo exacto de sus lamas**. Bloquea la radiación directa hacia la cara y rebota la luz natural directo al cuaderno.
+                    </p>
+                    <ul class="space-y-3 text-sm text-slate-300">
+                        <li class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-check text-brand-400"></i> Redirección eficiente de iluminación natural.
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-check text-brand-400"></i> Control inalámbrico instantáneo vía Bluetooth.
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-check text-brand-400"></i> Entornos de estudio ergonómicos y saludables.
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SIMULADOR INTERACTIVO (Canvas + Sliders) -->
+    <section id="simulador" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-wider">
+                    Demo Interactiva
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-3">Simulador de Ángulo de Lamas</h2>
+                <p class="text-slate-400 text-sm sm:text-base mt-2">
+                    Mueve el control de ángulo para comprobar cómo la persiana bloquea el rayo directo del rostro del estudiante y canaliza la luz limpia al escritorio.
+                </p>
+            </div>
+
+            <!-- Panel del Simulador -->
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-4 sm:p-8 shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <!-- Canvas donde se dibuja el rayo de luz, persiana y estudiante -->
+                <div class="lg:col-span-8 flex flex-col items-center">
+                    <div class="w-full relative rounded-2xl overflow-hidden border border-slate-700/60 shadow-inner">
+                        <canvas id="simCanvas" width="800" height="480" class="w-full h-auto block"></canvas>
+                        
+                        <!-- Badge estado visual -->
+                        <div id="statusBadge" class="absolute top-4 left-4 px-3 py-1.5 rounded-lg bg-slate-950/80 backdrop-blur-md border border-slate-700 text-xs font-medium text-slate-200 flex items-center gap-2">
+                            <span id="statusDot" class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+                            <span id="statusText">Deslumbramiento en Rostro</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controles táctiles e indicadores -->
+                <div class="lg:col-span-4 space-y-6">
+                    <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-6">
+                        
+                        <!-- Control Slider de Ángulo -->
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label for="angleSlider" class="text-sm font-semibold text-slate-200 flex items-center gap-2">
+                                    <i class="fa-solid fa-compass text-brand-500"></i> Ángulo de Lamas
+                                </label>
+                                <span id="angleValue" class="text-sm font-mono font-bold text-brand-400 bg-brand-500/10 px-2.5 py-1 rounded-md border border-brand-500/20">
+                                    0°
+                                </span>
+                            </div>
+                            <input 
+                                type="range" 
+                                id="angleSlider" 
+                                min="-60" 
+                                max="60" 
+                                value="0" 
+                                class="w-full h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand-500"
+                            >
+                            <div class="flex justify-between text-[11px] text-slate-500 mt-1 font-mono">
+                                <span>-60° (Abierta)</span>
+                                <span>0° (Plano)</span>
+                                <span>+60° (Redirigida)</span>
+                            </div>
+                        </div>
+
+                        <!-- Presets rápidos -->
+                        <div>
+                            <span class="text-xs text-slate-400 font-medium block mb-2">Modos Preestablecidos:</span>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="setPreset(-45)" class="py-2 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs text-slate-300 font-medium transition text-center">
+                                    <i class="fa-solid fa-sun text-amber-400 mr-1"></i> Sol Directo
+                                </button>
+                                <button onclick="setPreset(45)" class="py-2 px-3 rounded-lg bg-brand-600/20 hover:bg-brand-600/30 border border-brand-500/40 text-xs text-brand-300 font-medium transition text-center">
+                                    <i class="fa-solid fa-shield-halved text-brand-400 mr-1"></i> Modo Óptimo
+                                </button>
+                            </div>
+                        </div>
+
+                        <hr class="border-slate-800">
+
+                        <!-- Métricas del Estado -->
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="text-slate-400">Molestia Visual:</span>
+                                <span id="discomfortLevel" class="font-bold text-red-400">Alta (85%)</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                <div id="discomfortBar" class="bg-red-500 h-full w-[85%] transition-all duration-300"></div>
+                            </div>
+
+                            <div class="flex items-center justify-between text-xs pt-1">
+                                <span class="text-slate-400">Luz en Cuaderno:</span>
+                                <span id="notebookLightLevel" class="font-bold text-amber-400">Baja (20%)</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                <div id="notebookLightBar" class="bg-amber-400 h-full w-[20%] transition-all duration-300"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Características Clave -->
+    <section id="caracteristicas" class="py-20 bg-slate-900/40 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold uppercase tracking-widest text-brand-500 mb-2">Puntos Fuertes</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white">Características del Sistema</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 hover:border-slate-700 transition">
+                    <div class="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center text-lg mb-4">
+                        <i class="fa-bluetooth-b fab"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Ajuste por Bluetooth</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Conexión rápida desde cualquier teléfono smartphone o tablet docente sin necesidad de cables ni instalaciones complejas.
+                    </p>
+                </div>
+
+                <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 hover:border-slate-700 transition">
+                    <div class="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg mb-4">
+                        <i class="fa-solid fa-sun"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Redirección Óptica</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Aprovecha el 100% de la iluminación natural del sol rebotándola hacia el techo y las mesas de trabajo de forma uniforme.
+                    </p>
+                </div>
+
+                <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 hover:border-slate-700 transition">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg mb-4">
+                        <i class="fa-solid fa-eye"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Prevención de Fatiga Visual</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Disminuye los síntomas de cansancio ocular, dolor de cabeza y falta de atención provocados por la luz directa persistente.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-900 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-slate-500 text-xs sm:text-sm">
+            <p>© Proyecto Escolar - Persiana Inteligente para la Salud Visual en Aulas de Clase.</p>
+        </div>
+    </footer>
+
+    <!-- Lógica de Simulación Interactiva en JS -->
+    <script>
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+        const angleSlider = document.getElementById('angleSlider');
+        const angleValue = document.getElementById('angleValue');
+
+        // Referencias a elementos de interfaz
+        const statusDot = document.getElementById('statusDot');
+        const statusText = document.getElementById('statusText');
+        const discomfortLevel = document.getElementById('discomfortLevel');
+        const discomfortBar = document.getElementById('discomfortBar');
+        const notebookLightLevel = document.getElementById('notebookLightLevel');
+        const notebookLightBar = document.getElementById('notebookLightBar');
+
+        let slatAngle = 0; // Grados
+
+        function setPreset(val) {
+            angleSlider.value = val;
+            updateSimulation();
+        }
+
+        angleSlider.addEventListener('input', updateSimulation);
+
+        function updateSimulation() {
+            slatAngle = parseInt(angleSlider.value);
+            angleValue.textContent = `${slatAngle > 0 ? '+' : ''}${slatAngle}°`;
+            drawScene();
+            calculateMetrics();
+        }
+
+        function calculateMetrics() {
+            // Evaluamos la eficacia según el ángulo de las lamas
+            // Ángulo positivo (entre 30 y 55) redirige la luz al escritorio
+            let discomfort = 0;
+            let notebookLight = 0;
+
+            if (slatAngle < 10) {
+                // Luz entra directa al rostro
+                discomfort = Math.min(100, Math.round(85 - slatAngle * 0.8));
+                notebookLight = 20;
+                statusDot.className = "w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse";
+                statusText.textContent = "Luz Directa Molesta en Rostro";
+            } else if (slatAngle >= 10 && slatAngle <= 25) {
+                discomfort = 40;
+                notebookLight = 50;
+                statusDot.className = "w-2.5 h-2.5 rounded-full bg-yellow-500";
+                statusText.textContent = "Ajuste Parcial";
+            } else {
+                // Modo óptimo de redirección
+                discomfort = 10;
+                notebookLight = 90;
+                statusDot.className = "w-2.5 h-2.5 rounded-full bg-emerald-500";
+                statusText.textContent = "Iluminación Ergonómica Óptima";
+            }
+
+            discomfortLevel.textContent = `${discomfort}%`;
+            discomfortBar.style.width = `${discomfort}%`;
+            discomfortBar.className = discomfort > 50 ? "bg-red-500 h-full transition-all duration-300" : "bg-emerald-500 h-full transition-all duration-300";
+
+            notebookLightLevel.textContent = `${notebookLight}%`;
+            notebookLightBar.style.width = `${notebookLight}%`;
+        }
+
+        function drawScene() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 1. Fondo del Salón de Clases
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Pared del fondo
+            ctx.fillStyle = '#1e293b';
+            ctx.fillRect(160, 40, 640, 380);
+
+            // 2. Ventana a la izquierda (Marco)
+            ctx.fillStyle = '#334155';
+            ctx.fillRect(40, 40, 120, 360);
+            ctx.fillStyle = '#38bdf8';
+            ctx.globalAlpha = 0.15;
+            ctx.fillRect(48, 48, 104, 344);
+            ctx.globalAlpha = 1.0;
+
+            // 3. Dibujar Sol exterior
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(10, 80, 40, 0, Math.PI * 2);
+            ctx.fillStyle = '#f59e0b';
+            ctx.shadowColor = '#fbbf24';
+            ctx.shadowBlur = 30;
+            ctx.fill();
+            ctx.restore();
+
+            // 4. Dibujar Estudiante y Escritorio
+            // Escritorio
+            ctx.fillStyle = '#78350f';
+            ctx.fillRect(500, 280, 220, 15); // Tabla
+            ctx.fillStyle = '#451a03';
+            ctx.fillRect(520, 295, 12, 140); // Pata izq
+            ctx.fillRect(690, 295, 12, 140); // Pata der
+
+            // Cuaderno sobre escritorio
+            ctx.fillStyle = '#f8fafc';
+            ctx.fillRect(540, 272, 70, 10);
+            ctx.fillStyle = '#0284c7';
+            ctx.fillRect(540, 272, 10, 10);
+
+            // Estudiante (Cabeza y cuerpo)
+            // Cuerpo
+            ctx.fillStyle = '#065f46'; // Suéter verde
+            ctx.beginPath();
+            ctx.ellipse(650, 360, 40, 70, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Cabeza
+            ctx.fillStyle = '#fcd34d'; // Tono piel
+            ctx.beginPath();
+            ctx.arc(630, 230, 28, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Cabello
+            ctx.fillStyle = '#1e1b4b';
+            ctx.beginPath();
+            ctx.arc(630, 220, 29, Math.PI, Math.PI * 2);
+            ctx.fill();
+
+            // Rostro / Expresión (Ojos)
+            ctx.fillStyle = '#0f172a';
+            if (slatAngle < 10) {
+                // Molesto (Ojos cerrados)
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#0f172a';
+                ctx.beginPath();
+                ctx.moveTo(615, 230); ctx.lineTo(625, 232);
+                ctx.moveTo(632, 232); ctx.lineTo(640, 230);
+                ctx.stroke();
+            } else {
+                // Contento
+                ctx.beginPath();
+                ctx.arc(620, 230, 3, 0, Math.PI * 2);
+                ctx.arc(635, 230, 3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // 5. Dibujar Lamas de la Persiana (En la ventana)
+            const numSlats = 9;
+            const startY = 70;
+            const gap = 34;
+
+            ctx.save();
+            for (let i = 0; i < numSlats; i++) {
+                let slatY = startY + (i * gap);
+
+                ctx.save();
+                ctx.translate(100, slatY);
+                ctx.rotate((slatAngle * Math.PI) / 180);
+
+                // Lama individual
+                ctx.fillStyle = '#e2e8f0';
+                ctx.shadowColor = 'rgba(0,0,0,0.5)';
+                ctx.shadowBlur = 4;
+                ctx.fillRect(-35, -3, 70, 6);
+
+                ctx.restore();
+            }
+            ctx.restore();
+
+            // 6. Trazado y Simulación de Rayos de Luz Natural
+            ctx.save();
+            ctx.lineWidth = 28;
+
+            if (slatAngle < 10) {
+                // RAYO DIRECTO AL ROSTRO DEL ESTUDIANTE
+                let gradient = ctx.createLinearGradient(100, 120, 630, 230);
+                gradient.addColorStop(0, 'rgba(251, 191, 36, 0.6)');
+                gradient.addColorStop(1, 'rgba(239, 68, 68, 0.7)');
+
+                ctx.strokeStyle = gradient;
+                ctx.beginPath();
+                ctx.moveTo(100, 120);
+                ctx.lineTo(630, 230);
+                ctx.stroke();
+
+                // Destello directo en la cara
+                ctx.beginPath();
+                ctx.arc(630, 230, 25, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(239, 68, 68, 0.3)';
+                ctx.fill();
+
+            } else {
+                // RAYO REDIRIGIDO CUIDADOSAMENTE HACIA EL CUADERNO
+                // Tramo 1: Sol -> Persiana
+                let grad1 = ctx.createLinearGradient(20, 80, 100, 180);
+                grad1.addColorStop(0, 'rgba(251, 191, 36, 0.5)');
+                grad1.addColorStop(1, 'rgba(251, 191, 36, 0.3)');
+
+                ctx.strokeStyle = grad1;
+                ctx.beginPath();
+                ctx.moveTo(20, 80);
+                ctx.lineTo(100, 180);
+                ctx.stroke();
+
+                // Tramo 2: Persiana -> Rebotado suave al Cuaderno
+                let grad2 = ctx.createLinearGradient(100, 180, 575, 272);
+                grad2.addColorStop(0, 'rgba(56, 189, 248, 0.4)');
+                grad2.addColorStop(1, 'rgba(251, 191, 36, 0.6)');
+
+                ctx.strokeStyle = grad2;
+                ctx.beginPath();
+                ctx.moveTo(100, 180);
+                ctx.lineTo(575, 272);
+                ctx.stroke();
+
+                // Área iluminada suave en el cuaderno
+                ctx.beginPath();
+                ctx.ellipse(575, 275, 45, 12, 0, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(251, 191, 36, 0.35)';
+                ctx.fill();
+            }
+
+            ctx.restore();
+        }
+
+        // Inicializar simulador al cargar
+        window.onload = function() {
+            updateSimulation();
+        };
+
+        // Redimensionamiento adaptativo del canvas
+        window.addEventListener('resize', () => {
+            drawScene();
+        });
+    </script>
+</body>
+</html>
