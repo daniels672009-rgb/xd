@@ -7,13 +7,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-dark: #0d1117;
-      --card-bg: #161b22;
-      --border-color: #30363d;
-      --accent-blue: #2f81f7;
+      --bg-dark: #090d16;
+      --card-bg: #111726;
+      --border-color: #1e293b;
+      --accent-blue: #2563eb;
       --accent-cyan: #38bdf8;
-      --text-main: #f0f6fc;
-      --text-muted: #8b949e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
     }
 
     * {
@@ -27,13 +27,15 @@
       background-color: var(--bg-dark);
       color: var(--text-main);
       line-height: 1.6;
-      padding: 20px;
+      padding: 0;
+      margin: 0;
     }
 
+    /* Encabezado Principal */
     header {
       text-align: center;
-      padding: 40px 20px 20px;
-      max-width: 900px;
+      padding: 60px 20px 40px;
+      max-width: 1000px;
       margin: 0 auto;
     }
 
@@ -42,105 +44,123 @@
       background: rgba(56, 189, 248, 0.1);
       color: var(--accent-cyan);
       border: 1px solid rgba(56, 189, 248, 0.3);
-      padding: 6px 16px;
+      padding: 8px 20px;
       border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      margin-bottom: 15px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      margin-bottom: 20px;
       text-transform: uppercase;
     }
 
     h1 {
-      font-size: 3rem;
+      font-size: 3.8rem;
       font-weight: 800;
-      background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%);
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, #ffffff 30%, #38bdf8 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
 
     p.subtitle {
-      font-size: 1.15rem;
+      font-size: 1.3rem;
       color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto;
     }
 
-    .main-layout {
+    /* Contenedor Principal */
+    .container {
       max-width: 1100px;
-      margin: 40px auto;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 30px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
     }
 
-    @media (min-width: 850px) {
-      .main-layout {
-        grid-template-columns: 1fr 1fr;
-        align-items: start;
-      }
+    /* SECCIÓN DEL VIDEO DESTACADO (GRANDE Y CENTRADO) */
+    .hero-video-section {
+      width: 100%;
+      margin: 30px 0 60px;
+      display: flex;
+      justify-content: center;
     }
 
-    .card {
+    .video-card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 25px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      width: 100%;
+      max-width: 550px; /* Tamaño ideal para video vertical de teléfono */
     }
 
-    /* Estilo para el contenedor del video */
     .video-wrapper {
       position: relative;
       width: 100%;
-      border-radius: 12px;
+      border-radius: 16px;
       overflow: hidden;
-      border: 1px solid var(--border-color);
       background: #000;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
     }
 
     video {
       width: 100%;
       height: auto;
       display: block;
-      border-radius: 12px;
-      object-fit: cover;
+      border-radius: 16px;
+    }
+
+    /* SECCIÓN DE DETALLES Y SIMULADOR (FILAS ESPACIOSAS) */
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    @media (min-width: 850px) {
+      .details-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 35px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     }
 
     .card-title {
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       font-weight: 700;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       color: #fff;
       display: flex;
       align-items: center;
-      gap: 10px;
-    }
-
-    .card-title span {
-      color: var(--accent-cyan);
-    }
-
-    .problem-solution {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+      gap: 12px;
     }
 
     .info-box {
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.02);
       border-left: 4px solid var(--accent-blue);
-      padding: 15px 20px;
-      border-radius: 0 8px 8px 0;
+      padding: 20px;
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 20px;
     }
 
     .info-box.problem {
       border-left-color: #f87171;
     }
 
+    .info-box.solution {
+      border-left-color: var(--accent-cyan);
+    }
+
     .info-box h3 {
-      font-size: 1.1rem;
-      margin-bottom: 5px;
+      font-size: 1.2rem;
+      margin-bottom: 8px;
     }
 
     .info-box.problem h3 {
@@ -151,36 +171,23 @@
       color: var(--accent-cyan);
     }
 
-    /* Interactive Simulator */
-    .simulator {
-      margin-top: 20px;
+    .info-box p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
     }
 
-    .controls {
-      margin-top: 15px;
-    }
-
-    label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: var(--text-main);
-    }
-
-    input[type="range"] {
-      width: 100%;
-      accent-color: var(--accent-cyan);
-      cursor: pointer;
+    /* Control del Simulador */
+    .simulator-box {
+      margin-top: 10px;
     }
 
     .canvas-container {
       width: 100%;
-      height: 200px;
-      background: #090d13;
-      border-radius: 8px;
+      height: 220px;
+      background: #06090e;
+      border-radius: 12px;
       border: 1px solid var(--border-color);
-      position: relative;
-      overflow: hidden;
+      margin-bottom: 20px;
     }
 
     canvas {
@@ -188,13 +195,28 @@
       height: 100%;
     }
 
+    label {
+      display: block;
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+      color: var(--text-main);
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 8px;
+      accent-color: var(--accent-cyan);
+      cursor: pointer;
+    }
+
     footer {
       text-align: center;
-      padding: 30px;
+      padding: 40px 20px;
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       border-top: 1px solid var(--border-color);
-      margin-top: 50px;
+      margin-top: 60px;
     }
   </style>
 </head>
@@ -203,50 +225,55 @@
   <header>
     <div class="badge">Proyecto Tecnológico Escolar</div>
     <h1>NEXUS UV</h1>
-    <p class="subtitle">Control Inteligente de Luz Natural y Prevención de Fatiga Visual</p>
+    <p class="subtitle">Sistema Automatizado de Persianas Inteligentes para la Prevención de Fatiga Visual en las Aulas</p>
   </header>
 
-  <main class="main-layout">
+  <main class="container">
     
-    <!-- Sección del Video Demostrativo -->
-    <div class="card">
-      <div class="card-title">
-        <span>🎥</span> Demostración en Vivo
-      </div>
-      <div class="video-wrapper">
-        <video autoplay loop muted playsinline>
-          <source src="video ia pagina web.mp4" type="video/mp4">
-          Tu navegador no soporta el formato de video.
-        </video>
-      </div>
-    </div>
-
-    <!-- Sección de Problemática y Solución -->
-    <div class="card problem-solution">
-      <div class="card-title">
-        <span>💡</span> Sobre el Proyecto
-      </div>
-
-      <div class="info-box problem">
-        <h3>La Problemática</h3>
-        <p>Durante las horas de mayor radiación, la luz solar directa impacta en el rostro de los estudiantes en el aula de clases. Esto genera un alto deslumbramiento, incomodidad constante y causa desgaste y fatiga visual a largo plazo.</p>
-      </div>
-
-      <div class="info-box solution">
-        <h3>Nuestra Solución: NEXUS UV</h3>
-        <p>Una persiana mecatrónica inteligente controlada mediante conectividad Bluetooth. Permite ajustar con precisión el ángulo de sus lamas para bloquear la luz incisiva directa sobre el rostro y redirigirla suavemente hacia la zona de trabajo (cuaderno o escritorio), garantizando una iluminación óptima sin fatiga.</p>
-      </div>
-
-      <!-- Simulador Interactivo -->
-      <div class="simulator">
-        <div class="card-title" style="font-size: 1.1rem;">
-          <span>⚙️</span> Simulador de Ángulo de Lamas
+    <!-- Video Principal Centrado -->
+    <section class="hero-video-section">
+      <div class="video-card">
+        <div class="video-wrapper">
+          <video autoplay loop muted playsinline>
+            <source src="video ia pagina web.mp4" type="video/mp4">
+            Tu navegador no soporta el reproductor de video.
+          </video>
         </div>
+      </div>
+    </section>
+
+    <!-- Información del Proyecto y Simulador Interactivo -->
+    <div class="details-grid">
+      
+      <!-- Columna 1: Fundamentación -->
+      <div class="card">
+        <div class="card-title">
+          <span>📌</span> Fundamentación del Proyecto
+        </div>
+
+        <div class="info-box problem">
+          <h3>La Problemática</h3>
+          <p>Durante las horas de mayor incidencia solar, la radiación directa entra por las ventanas golpeando el rostro de los estudiantes. Esto genera un alto deslumbramiento, incomodidad constante y fatiga visual severa con el tiempo.</p>
+        </div>
+
+        <div class="info-box solution">
+          <h3>Nuestra Solución: NEXUS UV</h3>
+          <p>Diseñamos una persiana mecatrónica inteligente con control Bluetooth. Ajusta de forma precisa el ángulo de sus lamas para bloquear la radiación incisiva sobre la cara y redirigir la iluminación natural directamente hacia la superficie de trabajo o cuaderno.</p>
+        </div>
+      </div>
+
+      <!-- Columna 2: Simulador -->
+      <div class="card simulator-box">
+        <div class="card-title">
+          <span>⚙️</span> Simulador de Refracción de Luz
+        </div>
+        
         <div class="canvas-container">
           <canvas id="simCanvas"></canvas>
         </div>
-        <div class="controls">
-          <label for="angleRange">Ángulo de las lamas: <span id="angleVal">45</span>°</label>
+
+        <div>
+          <label for="angleRange">Ángulo de inclinación de lamas: <span id="angleVal" style="color: var(--accent-cyan);">45</span>°</label>
           <input type="range" id="angleRange" min="0" max="90" value="45">
         </div>
       </div>
@@ -286,8 +313,8 @@
       const numLouver = 5;
       const startX = 60;
       const startY = 30;
-      const gap = 30;
-      const length = 30;
+      const gap = 32;
+      const length = 32;
 
       const rad = (angle * Math.PI) / 180;
 
@@ -303,26 +330,26 @@
       }
 
       // Dibujar Estudiante / Escritorio (Derecha)
-      ctx.fillStyle = '#8b949e';
+      ctx.fillStyle = '#94a3b8';
       // Escritorio
-      ctx.fillRect(w - 100, h - 40, 80, 8);
+      ctx.fillRect(w - 110, h - 35, 90, 8);
       // Estudiante (Cabeza)
       ctx.beginPath();
-      ctx.arc(w - 60, h - 90, 18, 0, Math.PI * 2);
+      ctx.arc(w - 65, h - 85, 18, 0, Math.PI * 2);
       ctx.fill();
 
       // Dibujar Rayos de Luz
-      ctx.strokeStyle = 'rgba(253, 224, 71, 0.4)';
+      ctx.strokeStyle = 'rgba(253, 224, 71, 0.45)';
       ctx.lineWidth = 2;
 
-      let targetY = (h - 90) + (angle / 90) * 50; // De la cara al escritorio
+      let targetY = (h - 85) + (angle / 90) * 50; // De la cara hacia el escritorio
 
       for (let i = 0; i < numLouver; i++) {
         let y = startY + i * gap;
         ctx.beginPath();
         ctx.moveTo(0, y - 10);
         ctx.lineTo(startX, y);
-        ctx.lineTo(w - 60, targetY);
+        ctx.lineTo(w - 65, targetY);
         ctx.stroke();
       }
     }
